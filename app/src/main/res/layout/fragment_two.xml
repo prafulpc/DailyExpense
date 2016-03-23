@@ -1,0 +1,83 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.android.dailyexpense.TwoFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@color/windowBackground">
+
+        <TextView
+            android:id="@+id/txtview_cash"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cash"
+            android:textSize="30sp" />
+
+
+        <TextView
+            android:id="@+id/txtview_cash_rupeeSymb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Rs"
+            android:textSize="30sp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="47dp"
+            android:layout_marginEnd="47dp"
+            android:layout_alignLeft="@+id/txtview_totalcash"
+            android:layout_alignStart="@+id/txtview_totalcash" />
+
+        <TextView
+            android:id="@+id/txtview_totalcash"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/thousand"
+            android:textSize="30sp"
+            android:paddingStart="20dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+        <TextView
+            android:id="@+id/txtview_cashRemaining_remaining"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cash_remaining"
+            android:textSize="15sp"
+            android:layout_below="@+id/txtview_totalcash"/>
+
+        <TextView
+            android:id="@+id/txtview_cashRemaining_rupeeSymb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Rs"
+            android:textSize="15sp"
+            android:layout_alignTop="@+id/txtview_cashRemaining_cash"
+            android:layout_toRightOf="@+id/txtview_cashRemaining_remaining"
+            android:layout_toEndOf="@+id/txtview_cashRemaining_remaining"
+            android:layout_marginLeft="6dp"
+            android:layout_marginStart="6dp" />
+
+        <TextView
+            android:id="@+id/txtview_cashRemaining_cash"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sevenhundred"
+            android:textSize="15sp"
+            android:layout_alignTop="@+id/txtview_cashRemaining_remaining"
+            android:layout_toRightOf="@+id/txtview_cashRemaining_rupeeSymb"
+            android:layout_toEndOf="@+id/txtview_cashRemaining_rupeeSymb"
+            android:layout_marginLeft="7dp"
+            android:layout_marginStart="7dp" />
+
+    </RelativeLayout>
+
+</RelativeLayout>
