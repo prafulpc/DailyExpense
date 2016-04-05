@@ -5,6 +5,7 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -12,11 +13,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.Date;
+
 public class AddTransaction extends AppCompatActivity {
 
     DBHelper myDb;
     EditText spend_amt,category,date;
     Button btnsave, btnshow;
+
+    String editTextValue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,12 +31,6 @@ public class AddTransaction extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        EditText ed = (EditText)findViewById(R.id.editText_Category);
-
-        Intent intent = getIntent();
-        String str = intent.getStringExtra("mytext");
-        ed.setText(str);
 
         myDb = new DBHelper(this);
 
@@ -47,10 +46,21 @@ public class AddTransaction extends AppCompatActivity {
 
     }
 
+
     public void onStart(){
         super.onStart();
-        EditText txtDate = (EditText)findViewById(R.id.editText_Date);
-        txtDate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+
+        category.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                Intent intent = new Intent(AddTransaction.this, Category.class);
+                startActivity(intent);
+
+            }
+        });
+
+
+        date.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(hasFocus){
@@ -61,16 +71,7 @@ public class AddTransaction extends AppCompatActivity {
             }
         });
 
-        category = (EditText)findViewById(R.id.editText_Category);
 
-        category.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                Intent intent = new Intent(AddTransaction.this,Category.class);
-                startActivity(intent);
-
-            }
-        });
     }
 
     public void AddData(){
