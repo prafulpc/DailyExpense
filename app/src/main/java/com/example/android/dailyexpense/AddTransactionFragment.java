@@ -2,6 +2,7 @@ package com.example.android.dailyexpense;
 
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,8 @@ public class AddTransactionFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.i("TransactionFragment", "Fragment");
         return inflater.inflate(R.layout.fragment_add_transaction, container, false);
+
     }
 }

@@ -1,5 +1,6 @@
 package com.example.android.dailyexpense;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.FragmentTransaction;
 import android.content.Intent;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,7 +23,14 @@ public class AddTransaction extends AppCompatActivity {
     EditText spend_amt,category,date;
     Button btnsave, btnshow;
 
-    String editTextValue;
+    private String save_Spend;
+    private String textAtView_spend;
+
+    private String save_Date;
+    private String textAtView_date;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,49 +39,174 @@ public class AddTransaction extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //Log.i("onCreate", "Add Transaction");
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        myDb = new DBHelper(this);
 
-        spend_amt = (EditText)findViewById(R.id.editText_spend);
-        category = (EditText)findViewById(R.id.editText_Category);
-        date = (EditText)findViewById(R.id.editText_Date);
+//        if(savedInstanceState!=null){
+//            Log.i("savedInstanceState","Not Null");
+//            savedInstanceState.get(textAtView_spend);
+//            spend_amt.setText(save_Spend);
+//
+//        }
+//        else
 
-        btnsave = (Button)findViewById(R.id.button_save);
-        btnshow= (Button)findViewById(R.id.button_show);
+//            Log.i("savedInstanceState","Null");
 
-        AddData();
-        ViewData();
+            EditText ed = (EditText) findViewById(R.id.editText_Category);
+
+            Intent intent = getIntent();
+            String str = intent.getStringExtra("mytext");
+            ed.setText(str);
+
+            myDb = new DBHelper(this);
+
+            spend_amt = (EditText) findViewById(R.id.editText_spend);
+            category = (EditText) findViewById(R.id.editText_Category);
+            date = (EditText) findViewById(R.id.editText_Date);
+
+            btnsave = (Button) findViewById(R.id.button_save);
+            btnshow = (Button) findViewById(R.id.button_show);
+
+
+            AddData();
+            ViewData();
+
+
+            category.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View v, boolean hasFocus) {
+                    if(hasFocus) {
+                        Log.i("OnFocusChangeListener", "Category Focus");
+//                    Intent intent = new Intent(AddTransaction.this, Category.class);
+//                    startActivity(intent);
+
+                        Intent i = new Intent(AddTransaction.this, Category.class);
+                        startActivityForResult(i, 1);
+                        category.clearFocus();
+                    }
+                }
+            });
+
+            final EditText txtDate = (EditText) findViewById(R.id.editText_Date);
+
+            txtDate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View v, boolean hasFocus) {
+                      Log.i("OnFocusChangeDate","date focus");
+                    if (hasFocus) {
+                        DateDialog dialog = new DateDialog(v);
+                        FragmentTransaction ft = getFragmentManager().beginTransaction();
+                        dialog.show(ft, "DatePicker");
+                        txtDate.clearFocus();
+                    }
+                }
+            });
+
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == 1) {
+            if(resultCode == Activity.RESULT_OK){
+                String result = data.getStringExtra("result");
+                category.setText(result);
+
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+                //Write your code if there's no result
+            }
+        }
+    }
+
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceStat) {
+        super.onSaveInstanceState(savedInstanceStat);
+        Log.i("onSaveInstanceState", "savedInstance");
+
+        //save spend amount
+        save_Spend = spend_amt.getText().toString();
+
+        savedInstanceStat.putString("spendAmount", save_Spend);
+
+
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceStat) {
+        super.onRestoreInstanceState(savedInstanceStat);
+
+        spend_amt.setText(savedInstanceStat.getString("spendAmount"));
 
     }
 
 
     public void onStart(){
+        Log.i("AddTransaction", "onStart");
         super.onStart();
 
-        category.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                Intent intent = new Intent(AddTransaction.this, Category.class);
-                startActivity(intent);
-
-            }
-        });
-
-
-        date.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus){
-                    DateDialog dialog = new DateDialog(v);
-                    FragmentTransaction ft = getFragmentManager().beginTransaction();
-                    dialog.show(ft,"DatePicker");
-                }
-            }
-        });
+//        category.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View v, boolean hasFocus) {
+//                Intent intent = new Intent(AddTransaction.this, Category.class);
+//                startActivity(intent);
+//
+//            }
+//        });
+//
+//
+//        EditText txtDate = (EditText)findViewById(R.id.editText_Date);
+//        txtDate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View v, boolean hasFocus) {
+//                if(hasFocus){
+//                    DateDialog dialog = new DateDialog(v);
+//                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+//                    dialog.show(ft,"DatePicker");
+//                }
+//            }
+//        });
 
 
     }
+
+    public void onResume(){
+        Log.i("AddTransaction", "onResume");
+        super.onResume();
+
+    }
+
+    public void onPause(){
+        Log.i("AddTransaction", "onPause");
+        super.onPause();
+    }
+
+    public void onStop(){
+        Log.i("AddTransaction", "onStop");
+        super.onStop();
+
+    }
+
+    public void onRestart(){
+        Log.i("AddTransaction", "onRestart");
+        super.onRestart();
+    }
+
+    public void onDestroy(){
+        Log.i("AddTransaction", "onDestroy");
+        super.onDestroy();
+
+        // Stop method tracing that the activity started during onCreate()
+        android.os.Debug.stopMethodTracing();
+    }
+
+
+
+
 
     public void AddData(){
         btnsave.setOnClickListener(new View.OnClickListener() {
@@ -80,12 +214,13 @@ public class AddTransaction extends AppCompatActivity {
             public void onClick(View v) {
                 boolean isInserted = myDb.insertData(spend_amt.getText().toString(), category.getText().toString(), date.getText().toString());
 
-                if (isInserted = true)
+                if (isInserted = true) {
                     Toast.makeText(AddTransaction.this, "Data Inserted", Toast.LENGTH_LONG).show();
-
-                else
+                }
+                else {
                     Toast.makeText(AddTransaction.this, "Data Not Inserted", Toast.LENGTH_LONG).show();
-
+                }
+                finish();
             }
         });
     }

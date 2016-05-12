@@ -32,6 +32,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Log.i("onCreate","MainActivity");
 
+        //sharanu
+
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -68,6 +71,53 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState){
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+    }
+
+    public void onStart(){
+        Log.i("MainActivity", "onStart");
+        super.onStart();
+
+    }
+
+    public void onResume(){
+        Log.i("MainActivity", "onResume");
+        super.onResume();
+
+    }
+
+    public void onPause(){
+        Log.i("MainActivity", "onPause");
+        super.onPause();
+    }
+
+    public void onStop(){
+        Log.i("MainActivity", "onStop");
+
+        super.onStop();
+
+    }
+
+    public void onRestart(){
+        Log.i("MainActivity", "onRestart");
+        super.onRestart();
+    }
+
+    public void onDestroy(){
+        Log.i("MainActivity", "onDestroy");
+        super.onDestroy();
+
+        // Stop method tracing that the activity started during onCreate()
+        android.os.Debug.stopMethodTracing();
     }
 
     private void setupViewPager(ViewPager viewPager) {

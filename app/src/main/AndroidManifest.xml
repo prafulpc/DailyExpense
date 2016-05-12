@@ -21,8 +21,20 @@
         <activity
             android:name=".AddTransaction"
             android:label="@string/title_activity_add_transaction"
+            android:launchMode="singleTop"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+
+
+        <activity
+            android:name=".Category"
+            android:label="@string/Category"
+            android:parentActivityName=".AddTransaction">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".AddTransaction"/>
+        </activity>
     </application>
 
 </manifest>
